@@ -1,0 +1,14 @@
+import random
+
+wdith = 25
+Height = 25
+
+Scale_factor = 10
+###scale = 250x250 (magnify by 10)
+
+Screen_width = width *scale_factor
+Screen_height = height*scale_factor
+
+speed=1
+
+snake_position
