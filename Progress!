@@ -52,32 +52,39 @@ def update(delta_time):
       
  #Moving the tail 
       if tail_waiting == True:
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
+       for section in range(1,len(snake_position) - 1):
+                snake_position[section][0] = snake_position[section -1][0]
+                snake_position[section][1] = snake_position[section -1][1] 
 
+        if tail_waiting == False:
+            for section in range(1,len(snake_position))
+                snake_position[section][0] = snake_position[section -1][0]
+                snake_position[section][1] = snake_position[section -1][1] 
+
+  #Check if head hit the wall or body 
+        if snake_position[0][0] == 0 or snake_postion[0][0] == width:
+            screen_ID == 1
+        
+        elif snake_position[0][1] == 0 or snake_postion[0][1] == height:
+            screen_ID == 1
+
+        for section in range(1, len(snake_position)):
+            if snake_position[section][0] == snake_postion[0][0] and snake_position[section][1] == snake_position[0][1]:
+                screen_ID == 1
+        
+  #Check for head eating an apple, if true: add a new tail segment, and spawn new apple
+        if snake_postion[0][0] == apple[0] and snake_postion[0][1] == apple[1]:
+            snake_position.append([snake_position[0][0], snake_position[0][1]])
+
+            tail_waiting = True
+            tail_waiting_counter = 0
+            tail_waiting_counter_max = len(snake_position) - 1
+
+            apple[0] = random.randint(0, width)
+            apple[1] = random.randint(0, height)
+
+    if screen_ID is 1:
+      pass
 
 def on_draw():
     arcade.start_render()
