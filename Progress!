@@ -1,0 +1,127 @@
+import arcade 
+
+width = 25
+height = 25
+scale_factor = 10
+
+screen_width = width * scale_factor 
+screen_height = height * scale_factor 
+
+speed_x = 0 
+speed_y = 0 #starting off with a speed of zero because the snake does not move 
+
+tail_waiting = false #before the tail hits the apple, setting the variable 
+tail_waiting_counter = 0 
+tail_waiting_counter_max = 0 
+
+snake_position = [[width/2, height/2]] ""double brackets because we want to start the snake position
+                                        and there can be more sections to the list"" 
+screen_ID = 0 #if its a 0 you are playing the game and at 1 you are done the game
+
+apple = [None, None] #No apple in the beginning yet, it comes later 
+
+def setup():
+  arcade.open_window(width, height, "Snake") 
+  arcade.set_background_color.WHITE) 
+  arcade.schefule(update, 1/60)
+  
+  # Override arcade window methods
+  window = arcade.get_window()
+  window.on_draw = on_draw
+  window.on_key_press = on_key_press
+  window.on_key_release = on_key_release
+  window.on_mouse_press = on_mouse_press
+
+  arcade.run()
+  
+def update(delta_time):
+   if screen_ID == 0:
+    
+      if tail_waiting == True:
+          tail_waiting_counter +=1
+      
+ #Tail moving before the apple 
+          if tail_waiting_counter >= tail_waiting_counter_max:
+              tail_waiting = False #passed the apple 
+              tail_waiting_counter = 0 
+              tail_waiting_counter_max = 0 
+        
+ #Moving the head 
+      snake_position[0][0] += speed_x #the first position of the snake and the x coordinate of the head 
+      snake_position[0][1] += speed_y #the first position of the snake, and the x coordinate of the head
+      
+ #Moving the tail 
+      if tail_waiting == True:
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+
+def on_draw():
+    arcade.start_render()
+    
+    if screen_ID == 0:
+   `   #Drawing the snake 
+      for section in snake_position: #used to be list in a list 
+          arcade.draw_xywh_rectangle_filled(section[0] * scale_factor, section[1] * scale_factor, scale_factor, scale_factor)
+                                              #x coordinate  and y 
+        #Drawin the apple 
+          
+      arcade.draw_xywh_rectangle_filled(apple[0] * scale_factor, apple[1] * scale_factor, scale_factor, scale_factor)
+        # Draw the current score
+        arcade.draw_text(len(snake_position), 30, 30, arcade.color.BLACK, 12)
+
+    if screen_ID is 1:
+        arcade.draw_text(f"Your score was {str(len(snake_position))} GOOD JOB!", 30, 30, arcade.color.BLACK, 12)
+
+    
+def on_key_press(key, modifiers):
+    if key == arcade.key.UP and speed_y != -1: #if the up key is pressed and it isnt going down, move up
+        speed_y = 1
+        speed_x = 0 
+        
+    elif key == arcade.key.DOWN and speed_y != 1: #also if the downkey is pressed and the snake isnt going up, go down
+        speed_y = -1
+        speed_x = 0
+
+    elif key == arcade.key.RIGHT and speed_x != -1: #if the right key is pressed and the snake isnt going left go right
+        speed_x = 1
+        speed_y = 0 
+        
+    elif key == arcade.key.LEFT and speed_x != 1: #If the left key is pressed and it wasnt going right, then move left 
+        speed_x = -1
+        speed_y = 0
+
+def on_key_release(key, modifiers):
+    pass
+
+
+def on_mouse_press(x, y, button, modifiers):
+    pass
+
+
+if __name__ == '__main__':
+    setup()
+  
