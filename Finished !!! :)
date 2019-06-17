@@ -1,0 +1,129 @@
+import arcade
+import random
+
+width = 25
+height = 25
+
+scale_factor = 25
+
+screen_width = width * scale_factor 
+screen_height = height * scale_factor 
+
+speed_x = 0 #starting off with a speed of zero because the snake does not move and I want to set a global variable 
+speed_y = 0
+
+tail_added = None #There is no tail added in the beginning of the code. just wanna set the variable 
+
+snake_position = [[width // 2, height // 2]] ""double brackets because we want to start the snake position
+                                        and there can be more sections to the list"" 
+
+screen_ID = 0 #if its a 0 you are playing the game and at 1 you are done the game
+
+apple = [random.randint(1, width-1), random.randint(1, height-1)] #apple is a random coordinate 
+
+
+def setup():
+    arcade.open_window(width* scale_factor, height * scale_factor, "Dot Dot Dot")
+    arcade.set_background_color(arcade.color.WHITE)
+    arcade.schedule(update, 1 / 7)
+
+    # Override arcade window methods
+    window = arcade.get_window()
+    window.on_draw = on_draw
+    window.on_key_press = on_key_press
+    window.on_key_release = on_key_release
+    window.on_mouse_press = on_mouse_press
+
+    arcade.run()
+
+
+def update(delta_time):
+    global screen_ID
+    global snake_position
+    global tail_added
+    global apple
+
+    if screen_ID == 0:
+
+        if len(snake_position) > 3:
+            for section in range( 1 ,len(snake_position)):
+                if snake_position[section][0] == snake_position[0][0] and snake_position[section][1] is snake_position[0][1]:
+                    print(len(snake_position))
+                    screen_ID += 1
+
+        # Moving the snake
+        if tail_added != None:
+            snake_position.insert(0, [tail_added[0] + speed_x, tail_added[1] + speed_y])
+            tail_added = None
+
+
+        elif tail_added == None:
+            snake_position.insert(0, [snake_position[0][0] + SPEED_x, snake_position[0][1] + SPEED_y])
+            del snake_position[-1]
+
+
+        if snake_position[0][0] == apple[0] and snake_position[0][1] == apple[1]:
+            tail_added = [apple[0], apple[1]]
+            apple = [random.randint(1, WIDTH - 1), random.randint(1, HEIGHT - 1)]
+
+        if snake_position[0][0] == 0 or snake_position[0][0] == WIDTH:
+            screen_ID += 1
+
+        elif snake_position[0][1] == 0 or snake_position[0][1] == HEIGHT:
+            screen_ID += 1
+
+    else:
+        print("dead")
+
+
+def on_draw():
+    global apple
+    global snake_position
+
+    arcade.start_render()
+
+    if screen_ID == 0:
+
+        for section in snake_position:
+            arcade.draw_xywh_rectangle_filled(section[0] * scale_factor, section[1] * scale_factor, scale_factor,
+                                              scale_factor, arcade.color.BLACK)
+
+        arcade.draw_xywh_rectangle_filled(apple[0] * scale_factor, apple[1] * scale_factor, scale_factor, scale_factor,
+                                          arcade.color.RED)
+
+        arcade.draw_text(str(len(snake_position)), 30, 30, arcade.color.BLACK, 12)
+
+    if screen_ID == 1:
+        arcade.draw_text(f"Your score was {str(len(snake_position))} GOOD JOB!", 30, 30, arcade.color.BLACK, 12)
+
+
+def on_key_press(key, modifiers):
+    global speed_x
+    global speed_y
+
+    if arcade.key.UP == key and speed_y != -1:
+        speed_y = 1
+        speed_x = 0
+
+    if arcade.key.DOWN == key and SPEED_y != 1:
+        speed_y = -1
+        speed_x = 0
+
+    if arcade.key.LEFT == key and SPEED_x != 1:
+        speed_x = -1
+        speed_y = 0
+
+    if arcade.key.RIGHT == key and SPEED_x != -1:
+        speed_x = 1
+        speed_y = 0
+
+def on_key_release(key, modifiers):
+    pass
+
+
+def on_mouse_press(x, y, button, modifiers):
+    pass
+
+
+if __name__ == '__main__':
+    setup()
